@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
-
+from .serializers import *
+from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.generics import ListAPIView, UpdateAPIView,CreateAPIView,DestroyAPIView
 
 def fileList(request):
     files = FileData.objects.all()
@@ -25,3 +28,18 @@ def deleteFile(request, pk):
         file.delete()
     return redirect('file_list')
 
+class ListFileAPIView(ListAPIView):
+    queryset = FileData.objects.all()
+    serializer_class = FileSerializer
+
+class CreateFileAPIView(CreateAPIView):
+    queryset = FileData.objects.all()
+    serializer_class = FileSerializer
+
+class UpdateFileAPIView(UpdateAPIView):
+    queryset = FileData.objects.all()
+    serializer_class = FileSerializer
+
+class DeleteFileAPIView(DestroyAPIView):
+    queryset = FileData.objects.all()
+    serializer_class = FileSerializer
